@@ -1,3 +1,7 @@
 * [Home](/)
-
-    * [Examples](sub/)
+    * [Dokumentationsauftraege](Dokumentationsauftraege/)
+        * [1.1](Dokumentationsauftraege/1.1/)
+        * [1.2](Dokumentationsauftraege/1.2/)
+    *  [Praxissauftraege](Praxissauftraege/)
+        * [1.1](Praxissauftraege/1.1/)
+        * [1.2](Praxissauftraege/1.2/)
