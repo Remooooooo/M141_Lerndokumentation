@@ -7,26 +7,63 @@ SQL ist ein relationales Datenbankmanagementsystem. Diese Sprache besteht aus dr
 - Daten Abfragen
   
   ```sql
-  Select, Delete, Insert
+  SELECT, INSERT, UPDATE, DELETE, MERGE, CALL
   ```
+
+Beispiel:
+
+```sql
+SELECT *
+FROM NAME
+```
 
 - Datenstrukturen erstellen
   
   ```sql
-  Create, Drop
+  CREATE, ALTER, DROP, RENAME
   ```
+
+Beispiel:
+
+```sql
+CREATE TABLE Mitarbeiter (PersNr INT NOT NULL PRIMARY KEY, Anrede VARCHAR NOT NULL, Name VARCHAR NOT NULL, Vorname VARCHAR NOT NULL);
+```
 
 - Daten Verändern
   
   ```sql
-  Alter
+  ALTER
   ```
-  
+
+Beispiel:
+
+```sql
+ALTER TABLE Mitarbeiter
+ADD Email varchar(255);
+```
+
+Jene 3 Aufgaben lassen sich in verschiedene Kategorien unterteilen, auf 2 gehen wir in dieser Doku näher ein. Die anderen 2 wären DCL und TCL, wobei es sich beim DCL um Kontrolle und Rechte handelt und bei TCL um die Transaktionskontrolle mit Commands wie `COMMIT` oder `ROLLBACK`.
+
 ## SQL DDL
+
+DDL steht ist die Datendefinitionssprache, welche verwendet wird um die Struktur zu erstellen und zu beschreiben.
+
+Zu Ihr gehören unter anderem Folgende Befehle:
+
+`CREATE, ALTER, DROP, COMMENT, RENAME`
 
 ## SQL DML
 
+Die Datenbearbeitungssprache wird verwendet um, wie der Name schon sagt, Daten zu bearbeiten. Man kann mit ihr unter anderem Daten schreiben, löschen, lesen oder ändern.
+
+Zu Ihr gehören unter anderem Folgende Befehle:
+
+`SELECT, INSERT, UPDATE, DELETE, MERGE`
+
 ## ACID
+
+Durch ACID gewährleistet, dass auf einer Datenbank nur gütlige und Konsistente Daten vorhanden sind.
+Es sind nicht alle DB mit ACID "kompatibel". Fast alle SQL DB's sind kompatibel, gewisse NoSQL jedoch nur zu einem gewissen grad.
 
 ### A - Atomaritaet
 
@@ -49,13 +86,27 @@ Nach erfolgreicher Transaktion werden die Daten `permanent`gespeichert, damit si
 
 ## BASE
 
-### B
+Im vergleich zu ACID, ist BASE eher auf eine hohe verfügbarkeit ausgelegt.
+Da wie bereits bei ACID angesprochen vorallem NoSQL DB's nicht mit ACID kompatibel sind, verwenden jene BASE.
 
-### A
+### BA - Basically Avaialbe
 
-### S
+Anders als bei ACID stellt BASE nicht die Konsistenz als höchste Priorität, sondern die Verfügbarkeit der DB.
 
-### E
+### S - Soft state
+
+Während des Schreibvorgangs müssen die Daten nicht konsistent sein, weder müssen die Kopien der Daten identisch sein.
+
+### E - Eventual consistent
+
+Die Konsistenz der Daten wird erst zu einem späteren Zeitpunkt stattfunden.
+
+## Rückschlüsse
+
+Da beide, SQL und NoSQL, viele Vor- und Nachteile haben, werden in vielen Projekten die beiden Systeme parallel betrieben, mit dem Ziel, alle Vorteile zu nutzen und die Nachteile zu beheben.
+
+Falls die Daten sehr wichtig sind und die Konsistenz der Daten unabdingbar ist, wie z.B. eine Nutzer Authentifizierung, würde ich zu SQL greiffen.
+Falls die Daten auch ein wenig später ausgeliefert werden können, ist NoSQL eine gute Wahl.
 
 ## Transaktion
 
