@@ -1,4 +1,4 @@
-# 1.1
+# Tag 1
 
 ## SQL
 
@@ -83,6 +83,7 @@ Wenn eine Transaktion läuft, werden die Daten zur bearbeitung `gesperrt` und we
 ### D - Dauerhafitigkeit
 
 Nach erfolgreicher Transaktion werden die Daten `permanent`gespeichert, damit sie `unverändert` und `vollständig` sind. Auch bei einem Absturz sorgt diese SQL Eigenschaft für die Sicherheit der übermittelten Daten.
+Falls bei einem Absturz eine Transaktion noch nicht abgeschlossen war, wird die Transaktion abgebrochen.
 
 ## BASE
 
@@ -91,15 +92,15 @@ Da wie bereits bei ACID angesprochen vorallem NoSQL DB's nicht mit ACID kompatib
 
 ### BA - Basically Avaialbe
 
-Anders als bei ACID stellt BASE nicht die Konsistenz als höchste Priorität, sondern die Verfügbarkeit der DB.
+Anders als bei ACID stellt BASE nicht die Konsistenz als höchste Priorität, sondern die `Verfügbarkeit` der DB.
 
 ### S - Soft state
 
-Während des Schreibvorgangs müssen die Daten nicht konsistent sein, weder müssen die Kopien der Daten identisch sein.
+Während des Schreibvorgangs müssen die Daten `nicht konsistent` sein, weder müssen die Kopien der Daten identisch sein.
 
 ### E - Eventual consistent
 
-Die Konsistenz der Daten wird erst zu einem späteren Zeitpunkt stattfunden.
+Die Konsistenz der Daten wird erst zu einem `späteren Zeitpunkt` stattfunden.
 
 ## Rückschlüsse
 
@@ -107,8 +108,3 @@ Da beide, SQL und NoSQL, viele Vor- und Nachteile haben, werden in vielen Projek
 
 Falls die Daten sehr wichtig sind und die Konsistenz der Daten unabdingbar ist, wie z.B. eine Nutzer Authentifizierung, würde ich zu SQL greiffen.
 Falls die Daten auch ein wenig später ausgeliefert werden können, ist NoSQL eine gute Wahl.
-
-## Transaktion
-
-Teilschritte einer Übermittlung.
-Transaction control language definiert den ganzen Ablauf, falls ein Fehlschag geschieht oder die Schritte erfolgreich Übermittelt wurden.
