@@ -40,14 +40,25 @@ Diese Ebene ist es den Leseoperationen möglich, troz sperren die Daten zu lesen
 
 #### Read Comitted
 
+Diese Einstellung führt dazu, dass für die gesamte Transatktion alle Objekte welche verändert werden, schreibgesperrt werden.
+Da die Lesesperre aber nur kurzzeitig eingesetzt wird, kann `Non-Repeatable Read` und `Phantom Read` auftreten.
+
 #### Repeatable Read
 
+Durch diese Isolationsebene wird garantiert, dass die repetition der Operationen mit den gleichen Parametern auch die exakt gleichen Ergebnisse haben.
+Dies wird durch eine Lese und Schreibsperre der ganzen Dauer der Transaktion sichergestellt.
+Einzige Anomalie welche auftreten kann ist `Phantom Read.`
+
 #### Serializable
+
+Dies ist die höchste Isolationsebene. Auf diese Weise kann garantiert werden, dass jede Transaktion insich geschlossen ist und keine andere beinflusst werden kann.
 
 ## CAP
 
 Wie bei einem Projekt das Magische Dreieck exisitiert, gibt es bei Datenbanken das CAP.
 Laut der CAP Theroie ist es nicht möglich, bei allen drei Faktoren 100% zu erreichen.
+
+Google hat jedoch ein eigenes DBMS erstellt für GMail und ihnen ist es (mehr oder weniger) gelungen, alle 3 Werte komplett abzudecken.
 
 ### C - Consistency
 
