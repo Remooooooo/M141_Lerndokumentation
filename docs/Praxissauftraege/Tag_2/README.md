@@ -68,7 +68,7 @@ Version: 8.0.27-0ubuntu0.21.04.1
 
 ### Welche Dienste laufen sonst noch auf dem Server
 
-```command
+```bash
 service --status-all | grep '\[ + \]'
  [ + ]  acpid
  [ + ]  alsa-utils
@@ -146,3 +146,10 @@ Zugriff für Passwortauthentifizierung mittels Root:
 ## Testing
 
 ### Dokumentieren Sie wie Sie Ihre Installation überprüfen und was Sie dabei überprüfen
+
+Da MySQL ein Service ist, kann man den Service Status mit systemctl überprüfen
+`sudo systemctl status mysql`
+
+Ebenfalls kann man sich mit `sudo mysql` auf dem DBMS anmelden und schauen ob dies funktioniert
+
+Mit `SHOW DATABASES;` können bestehende Datenbanken angezeigt werden.

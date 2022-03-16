@@ -1,5 +1,56 @@
 # Tag 2
 
+## ACID
+
+Durch ACID gewährleistet, dass auf einer Datenbank nur gütlige und Konsistente Daten vorhanden sind.
+Es sind nicht alle DB mit ACID "kompatibel". Fast alle SQL DB's sind kompatibel, gewisse NoSQL jedoch nur zu einem gewissen grad.
+
+### A - Atomaritaet
+
+Wenn eine Transaktion erfolgt, sind das mehrere kleine Transaktionen. (Z.B. insert, update, delete) Die Anweisungen werden einzeln durchgeführt, wobei alle transaktionen durchgehen `müssen`, also wenn eine fehlschlägt, werden alle abgebrochen und der alte Zustand wiederhergestellt.
+
+### C - Konsistenz
+
+Die Konsistenz stellt sicher, dass die Daten, welche eingetragen werden sollen, `gültig` sind.
+Falls sie nicht gültig sind, wird der alte Zustand der DB wieder erzeugt.
+Die Bedingungen für die `Integrität` und die `logische Konsitenz` werden geprüft.
+Die Konsistenz wird vor und nach einer Transaktion sichergestellt. Während der Transaktion kann es vorkommen, dass inkonsistente Zustände auftreten.
+
+### I - Isolation
+
+Wenn eine Transaktion läuft, werden die Daten zur bearbeitung `gesperrt` und werden erst nach der Transaktion wieder freigegeben. Gewisse Operationen sind jedoch noch freigeben. Jede Transaktion wird ist `individuell` und eine Transaktion kann nicht auf resultate anderer Transaktionen zugreiffen.
+
+### D - Dauerhafitigkeit
+
+Nach erfolgreicher Transaktion werden die Daten `permanent`gespeichert, damit sie `unverändert` und `vollständig` sind. Auch bei einem Absturz sorgt diese SQL Eigenschaft für die Sicherheit der übermittelten Daten.
+Falls bei einem Absturz eine Transaktion noch nicht abgeschlossen war, wird die Transaktion abgebrochen.
+
+## BASE
+
+Im vergleich zu ACID, ist BASE eher auf eine hohe verfügbarkeit ausgelegt.
+Da wie bereits bei ACID angesprochen vorallem NoSQL DB's nicht mit ACID kompatibel sind, verwenden jene BASE.
+
+Die Abkürzung BASE ist eher als witz gedacht, da BASE das komplette gegenteil von ACID ist. Bei diesem Prinzip werden bewusst schwächen in kauf genommen, dafür gibt es andere stärken.
+
+### BA - Basically Avaialbe
+
+Anders als bei ACID stellt BASE nicht die Konsistenz als höchste Priorität, sondern die `Verfügbarkeit` der DB.
+
+### S - Soft state
+
+Während des Schreibvorgangs müssen die Daten `nicht konsistent` sein, weder müssen die Kopien der Daten identisch sein.
+
+### E - Eventual consistent
+
+Die Konsistenz der Daten wird erst zu einem `späteren Zeitpunkt` stattfunden.
+
+## Rückschlüsse
+
+Da beide, SQL und NoSQL, viele Vor- und Nachteile haben, werden in vielen Projekten die beiden Systeme parallel betrieben, mit dem Ziel, alle Vorteile zu nutzen und die Nachteile zu beheben.
+
+Falls die Daten sehr wichtig sind und die Konsistenz der Daten unabdingbar ist, wie z.B. eine Nutzer Authentifizierung, würde ich zu SQL greiffen.
+Falls die Daten auch ein wenig später ausgeliefert werden können, ist NoSQL eine gute Wahl.
+
 ## Transaktion
 
 Eine Transaktion besteht aus mehreren Teilschritten einer Übermittlung.
@@ -58,7 +109,7 @@ Dies ist die höchste Isolationsebene. Auf diese Weise kann garantiert werden, d
 Wie bei einem Projekt das Magische Dreieck exisitiert, gibt es bei Datenbanken das CAP.
 Laut der CAP Theroie ist es nicht möglich, bei allen drei Faktoren 100% zu erreichen.
 
-Google hat jedoch ein eigenes DBMS erstellt für GMail und ihnen ist es (mehr oder weniger) gelungen, alle 3 Werte komplett abzudecken.
+Google(Und andere grosse Firmen) hat jedoch ein eigenes DBMS erstellt für GMail und ihnen ist es (mehr oder weniger) gelungen, alle 3 Werte komplett abzudecken.
 
 ### C - Consistency
 
