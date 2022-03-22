@@ -34,10 +34,10 @@ Auf DB mit root verbinden. Danach folgende Befehle eingeben:
 ```bash
 create database `etherpad_lite_db`;
 -- Create a new database user. Replace <etherpaduser> and <password> with your own values. 
-CREATE USER '<etherpaduser1>'@'localhost' identified by '<Passwort1234.>';
-ALTER USER '<etherpaduser1>'@'localhost' IDENTIFIED WITH mysql_native_password BY '<Passwort1234.>';
+CREATE USER 'etherpaduser1'@'localhost' identified by 'Passwort1234.';
+ALTER USER 'etherpaduser1'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Passwort1234.';
 -- Grant permissions to that new database account. Replace <etherpaduser> with your own value from above step. 
-grant CREATE,ALTER,SELECT,INSERT,UPDATE,DELETE on `etherpad_lite_db`.* to '<etherpaduser1>'@'localhost';
+grant CREATE,ALTER,SELECT,INSERT,UPDATE,DELETE on `etherpad_lite_db`.* to 'etherpaduser1'@'localhost';
 ```
 
 ### Settings anpassen
