@@ -72,3 +72,50 @@ gunzip < DUMP_DB.sql.gz | mysql -u root -p NEUEDB
 ```
 
 Diese Migration geht aber auch effizienter und zwar mit Hilfe von Pipes un deiner SSH Verbindung.
+
+## Mydumper
+
+Mit Mydumper kann mann einen Dump einer Datenbank erstellen.
+Mit Parametern kann man den Dump in der Konsole beliebig anpassen.  
+So könnte ein Dump aussehen:
+
+```bash
+DB_NAME='pokemon'
+DB_HOST='localhost'
+DB_USER='root'
+DB_PASS='root'
+DB_DUMP='/tmp/testmydumper'
+
+ mkdir -p $DB_DUMP 
+ mydumper \ 
+ --database=$DB_NAME \ 
+ --host=$DB_HOST \ --user=$DB_USER \ 
+ --password=$DB_PASS \ 
+ --outputdir=$DB_DUMP \ 
+ --rows=500000 \ 
+ --compress \ 
+ --build-empty-files \ 
+ --threads=2 \ 
+ --compress-protocol
+```
+
+## Myloader
+
+Der Myloader ist das Gegenstück vom Dumper. Mit ihm kann man die erstellten Dumps wieder einlesen.
+So könnte ein loader aussehen:
+
+```bash
+DB_NAME='pokemon'
+DB_HOST='localhost'
+DB_USER='root'
+DB_PASS='root'
+DB_DUMP='/tmp/testmydumper'
+
+myloader \
+--database=$DB_NAME \ 
+--directory=$DB_DUMP \
+--queries-per-transaction=50000 \
+--threads=10 \
+--compress-protocol \
+--verbose=3 
+```
