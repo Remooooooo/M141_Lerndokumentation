@@ -70,6 +70,8 @@ mysql> SELECT user,authentication_string,plugin,host FROM mysql.user;
 
 Danach erfolgt die Anmeldung nicht mehr mit sudo mysql sondern mit `mysql -u root -p ` .
 
+Wichtig, ein User setzt sich aus User und Host zusammen!
+
 ### Benutzer konfiguriert (Login/Passwort/Berechtigung auf Datenbank eingeschränkt <- ein Anwendungsbenutzer)
 
 User erstellen und PW setzen:  
@@ -264,7 +266,7 @@ mysql> show tables;
 +------------------------------------------------------+
 ```
 
-Wie man erkennen kann, gibt es informationen über Logs, Zeitzonen, Infos, Funktionen, Pliugins usw.
+Wie man erkennen kann, gibt es informationen über Logs, Zeitzonen, Infos, Funktionen, Pliugins, Berechtigungen usw.
 
 #### sys
 
