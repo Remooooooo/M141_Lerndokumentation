@@ -76,5 +76,5 @@ Jetzt sollte die App erreichbar sein unter `http://localhost:9001`
 
 ## Diskutieren Sie die Security-Angriffsvektoren anhand der Applikation Etherpad
 
-Beispiel : "Angriffsvektor auf die Datenbank" <- Wie müsste die Applikation für einen Produktiv-Betrieb genutzt werden
-
+Um die Applikation in betrieb zu nehmen müsste man sie mit SSL verschlüsseln, da sie standardmässig mit HTTP benutzt wird.
+Ausserdem sollte die APP auf einem Server in einer DMZ laufen.
