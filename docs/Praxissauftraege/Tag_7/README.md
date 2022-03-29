@@ -66,15 +66,19 @@ npm install --no-save --legacy-peer-deps ep_headings2 ep_markdown ep_comments_pa
 
 ## Testen Sie Ihre Etherpad-Applikation aus und dokumentieren Sie die neu erstellten Daten aus der Datenbank
 
-Führen Sie nun folgenden Befehl im Etherpad-Folder aus:
+Folgender Befehl muss im Etherpad-Folder ausgeführt werden:
 
 ```bash
 src/bin/run.sh
 ```
 
-Jetzt sollte die App erreichbar sein unter `http://localhost:9001`
+Jetzt ist die Applikation unter `http://localhost:9001` erreichbar.
 
 ## Diskutieren Sie die Security-Angriffsvektoren anhand der Applikation Etherpad
 
 Um die Applikation in betrieb zu nehmen müsste man sie mit SSL verschlüsseln, da sie standardmässig mit HTTP benutzt wird.
 Ausserdem sollte die APP auf einem Server in einer DMZ laufen.
+
+Was auch von Vorteil wäre, ist die Software immer aktuell zu halten und mit Updates versorgen.
+
+Evt. sollte man auch mit einem Berechtigungssystem arbeiten, um ungewollte Zugriffe zu vermeiden.
