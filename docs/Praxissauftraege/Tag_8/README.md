@@ -1,7 +1,5 @@
 # Tag 8
 
-# Tag 8
-
 ## Übungsdokumentation Sakila
 
 ### Installation
@@ -171,11 +169,33 @@ mysql> SELECT @count;
 1 row in set (0.00 sec)
 ```
 
+So sieht der SP im Backend aus:
+
+```mysql
+CREATE PROCEDURE film_in_stock(IN p_film_id INT, IN p_store_id INT, OUT p_film_count INT)
+READS SQL DATA
+BEGIN
+     SELECT inventory_id
+     FROM inventory
+     WHERE film_id = p_film_id
+     AND store_id = p_store_id
+     AND inventory_in_stock(inventory_id);
+
+     SELECT COUNT(*)
+     FROM inventory
+     WHERE film_id = p_film_id
+     AND store_id = p_store_id
+     AND inventory_in_stock(inventory_id)
+     INTO p_film_count;
+END $$
+```
+
 ### View Anwenden
 
 Den View den wir benutzen dient dazu, die Tabelle der Filme und Schauspieler miteinander zu verbinden.
 Bei dieser View sieht man den Namen des Schauspielers sowie die Filme bei denen der Schauspieler mitgewirkt hat. (Inklusive Infos über den Film)
 
+```mysql
 mysql> SELECT * from actor_info;
 
 | actor_id | first_name  | last_name    | film_info
@@ -183,6 +203,39 @@ mysql> SELECT * from actor_info;
 |        1 | PENELOPE    | GUINESS      | Animation: ANACONDA CONFESSIONS; Children: LANGUAGE COWBOY; Classics: COLOR PHILADELPHIA, WESTWARD SEABISCUIT; Comedy: VERTIGO NORTHWEST; Documentary: ACADEMY DINOSAUR; Family: KING EVOLUTION, SPLASH GUMP; Foreign: MULHOLLAND BEAST; Games: BULWORTH COMMANDMENTS, HUMAN GRAFFITI; Horror: ELEPHANT TROJAN, LADY STAGE, RULES HUMAN; Music: WIZARD COLDBLOODED; New: ANGELS LIFE, OKLAHOMA JUMANJI; Sci-Fi: CHEAPER CLYDE; Sports: GLEAMING JAWBREAKER
 
 |        2 | NICK        | WAHLBERG     | Action: BULL SHAWSHANK; Animation: FIGHT JAWBREAKER; Children: JERSEY SASSY; Classics: DRACULA CRYSTAL, GILBERT PELICAN; Comedy: MALLRATS UNITED, RUSHMORE MERMAID; Documentary: ADAPTATION HOLES; Drama: WARDROBE PHANTOM; Family: APACHE DIVINE, CHISUM BEHAVIOR, INDIAN LOVE, MAGUIRE APACHE; Foreign: BABY HALL, HAPPINESS UNITED; Games: ROOF CHAMPION; Music: LUCKY FLYING; New: DESTINY SATURDAY, FLASH WARS, JEKYLL FROGMEN, MASK PEACH; Sci-Fi: CHAINSAW UPTOWN, GOODFELLAS SALUTE; Travel: LIAISONS SWEET, SMILE EARRING
+```
+
+So sieht der View im Backend aus:
+
+```mysql
+CREATE DEFINER=CURRENT_USER SQL SECURITY INVOKER VIEW actor_info
+AS
+SELECT
+a.actor_id,
+a.first_name,
+a.last_name,
+GROUP_CONCAT(DISTINCT CONCAT(c.name, ': ',
+        (SELECT GROUP_CONCAT(f.title ORDER BY f.title SEPARATOR ', ')
+                    FROM sakila.film f
+                    INNER JOIN sakila.film_category fc
+                      ON f.film_id = fc.film_id
+                    INNER JOIN sakila.film_actor fa
+                      ON f.film_id = fa.film_id
+                    WHERE fc.category_id = c.category_id
+                    AND fa.actor_id = a.actor_id
+                 )
+             )
+             ORDER BY c.name SEPARATOR '; ')
+AS film_info
+FROM sakila.actor a
+LEFT JOIN sakila.film_actor fa
+  ON a.actor_id = fa.actor_id
+LEFT JOIN sakila.film_category fc
+  ON fa.film_id = fc.film_id
+LEFT JOIN sakila.category c
+  ON fc.category_id = c.category_id
+GROUP BY a.actor_id, a.first_name, a.last_name;
+```
 
 ## Übungsdokumentation Chat-Applikation
 
@@ -237,4 +290,83 @@ INSERT INTO login VALUES ('2','user2','user2');
 
 ### Testing
 
-Nun sollte die URL ()[http://localhost:3000] aufrufbar sein und man kann sich mit den erstellten Logins anmelden.
+Nun ist die URL [](http://localhost:3000) aufrufbar sein und man kann sich mit den erstellten Logins anmelden. Mit 2 Browserfenster können beide User angemeldet werden.
+
+### SP erstellen
+
+- Procedure erstellen:
+Der SP wird im db.js erstellt in der Funktion con.connect.
+
+#### Select
+
+So sieht die Select Funktion ohne SP aus:
+
+```bash
+===============initilize data and show================================
+        socket.on('initial-messages', function (data) {
+            var sql = "SELECT * FROM message ";
+            con.query(sql, function (err, result, fields) {
+                var jsonMessages = JSON.stringify(result);
+                // console.log(jsonMessages);
+                io.sockets.emit('initial-message', {msg: jsonMessages});
+            });
+        });
+        socket.on('username', function (data) {
+            socket.emit('username', {username: username});
+            //io.sockets.emit('username', {username: username});
+        });
+```
+
+```bash
+CREATE PROCEDURE SelectAllMsg
+AS
+SELECT * FROM message
+GO
+```
+
+So sieht die Funktion mit SP aus(App funktionsfähig):
+
+```bash
+            // var sql = "SELECT * FROM message ";
+            var sql = "EXEC [dbo].[SelectAllMsg]";
+```
+
+#### Insert
+
+So sieht die Insert Funktion ohne SP aus:
+
+```bash
+//   ============== Send and Save Messages=====================================
+        socket.on('send-message', function (data, user) {
+            //console.log(user);
+            var sql = "INSERT INTO message (message , user) VALUES ('" + data+ "' , '"+user+"')";
+            con.query(sql, function (err, result) {
+                if (err) throw err;
+                //console.log("1 record inserted");
+            });
+            io.sockets.emit('new-message', {msg: data , username : user});
+        })
+    })
+```
+
+Erster versuch des SP ohne Erfolg:
+
+```bash
+CREATE PROCEDURE InsertMessage
+
+AS
+BEGIN
+	SET NOCOUNT ON;
+	INSERT INTO [message] ([message], [user])
+	VALUES ('" + data+ "' , '"+user+"')
+
+END
+GO
+```
+
+Der alte SQL command wird auskommentiert.
+
+```bash
+var sql = "EXEC [dbo].[InsertMsg]";
+//  var sql = "INSERT INTO message (message , user) VALUES ('" + data+ "' , '"+user+"')";
+```
