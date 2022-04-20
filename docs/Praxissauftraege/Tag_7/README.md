@@ -77,8 +77,10 @@ Jetzt ist die Applikation unter `http://localhost:9001` erreichbar.
 ## Diskutieren Sie die Security-Angriffsvektoren anhand der Applikation Etherpad
 
 Um die Applikation in betrieb zu nehmen müsste man sie mit SSL verschlüsseln, da sie standardmässig mit HTTP benutzt wird.
-Ausserdem sollte die APP auf einem Server in einer DMZ laufen.
+Ausserdem sollte die APP auf einem Server in einer DMZ laufen und hinter einen Reverse-Proxyserver hängen.
+
+Evt. sollte man auch mit einem Berechtigungssystem arbeiten, um ungewollte Zugriffe zu vermeiden. (Dafür das settings.json File ausbauen und überarbeiten, ebenfalls an einem anderen Ort mit anderen Berechtigungen)
+
+Ein weiterer Punkt ist, dass die Etherpad Applikation nicht direkt auf dem Datenbankserver laufen sollte. Die Verbindung zwischen Etherpad und Datenbankservre kann auch mit SSL verschlüsselt werden oder sogar mit Tokens authentifizieren.
 
 Was auch von Vorteil wäre, ist die Software immer aktuell zu halten und mit Updates versorgen.
-
-Evt. sollte man auch mit einem Berechtigungssystem arbeiten, um ungewollte Zugriffe zu vermeiden.
