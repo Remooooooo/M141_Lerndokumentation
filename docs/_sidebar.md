@@ -18,3 +18,4 @@
        *  [Tag_6](Praxissauftraege/Tag_6/)
        *  [Tag_8](Praxissauftraege/Tag_8/)
        *  [Tag_9](Praxissauftraege/Tag_9/)
+    *  [LB2](LB2/)
