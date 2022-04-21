@@ -115,10 +115,16 @@ Google(Und andere grosse Firmen) hat jedoch ein eigenes DBMS erstellt für GMail
 
 Sind die Daten konsistent und gültig?
 
+Zu jedem Zeitpunkt auf der DB.
+
 ### A - Availablility
 
 Sind die Daten immer verfügbar?
 
+Nicht nur wie lange läuft das System, sondern gibt es ein locking der Transaktionen.
+
 ### P - Partion tolerance
 
 Wie gut funktionieren die Daten wenn sie verteilt gespeichert werden.
+
+Können die Datensätze auf mehrere Systeme in mehreren RZ gleichzeitig betrieben werden.
