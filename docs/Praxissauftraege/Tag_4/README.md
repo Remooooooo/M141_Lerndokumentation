@@ -183,6 +183,9 @@ Das Datadir ist der Ordner wo sich alle MySQL Daten befinden. Der Zugang funktio
 
 `/var/lib/mysql`
 
+Dieser kann im Konfig File angepasst werden. (Als Sudo)
+`/etc/mysql/mysql.conf.d/mysqld.cnf.`
+
 ```bash
 root@m141vm:/var/lib/mysql# ls
  auto.cnf        ca-key.pem           ib_logfile0          public_key.pem
