@@ -70,11 +70,18 @@ Folgende Dinge sollten beim erstellen des Design beachtet werden:
 
 ### Caching
 
-In MySQL gibt es Caching. Jenes kann im Konfig File angepasst werden bzw. aktiviert werden. (Im etc/mysql/my.cnf)
+In MySQL gibt es Caching. Jenes kann im Konfig File angepasst werden bzw. aktiviert werden. (Im etc/mysql/mysql.conf.d/mysqld.cnf)
 
-query_cache_type=1          # 1 ist ein / 0 ist aus
-query_cache_size = 10M      # default 1MB / erhöhen auf 10MB
+Wichtig:
+Funktioniert ab MySQL Version 8 nicht mehr!!
+
+```bash
+query_cache_type=1          
+# 1 ist ein / 0 ist aus
+query_cache_size = 10M      
+# default 1MB / erhöhen auf 10MB
 query_cache_limit=1M
+```
 
 Überprüfen des Cachings:  
 `mysql> show variables like 'query_cache_%' ;`

@@ -77,11 +77,21 @@ Erstellt die DB meinedatenbank
 
 `db.createCollection[("meinecollection", {capped: true, size: 6142800, max: 10000})]`  
 Erstellt Collection
+Das Capped beschränkt die Dokumente in der Grösse, welche anschliessend angegeben wird. Es sind max. 10k Dokumente zugelassen.
 
 `db.meinecollection.insertOne({Name:"Remo",Alter: 24, Geschlecht: "Männlich"})`  
 Insert in die Collection
 
 So sieht der befehl aus, beim Insert muss ein acknowledge true returned werden.
+Neben dem verwendeten insert gibt es noch folgende:
+
+```bash
+.insertOne() # Fügt ein Dokument hinzu
+.insertMany() # Füht verschiedene Dokumente hinzu
+.insert() # Fügt mehrere Dokumente hinzu
+```
+
+
 
 ```bash
 > db.createCollection[("meinecollection", {capped: true, size: 6142800, max: 10000})]
@@ -96,3 +106,48 @@ So sieht der befehl aus, beim Insert muss ein acknowledge true returned werden.
 
 `db.meinecollection.find({Name:"Remo"})`  
 Sucht alle Objekte mit dem Namen Remo
+
+Folgender Befehl ist ein Update:
+
+```bash
+db.meinecollection.update(
+{ Alter: 28 },
+{
+$set: { Alter: 30 }
+}
+)
+```
+
+`db.meinecollection.remove ( { Alter: 28 }, 1 )`
+Remove Befehl mit dem just one Parameter. Ansonsten werden alle Datensätze mit dem Alter 28 gelöscht.
+
+### Konfiguration
+
+Data File:
+Die Daten liegen auf dem /var/lib/mongodb und das Log Directory ist /var/log/mongodb.
+
+ConfigurationFile:
+Die Konfigurationsdatei ist /etc/mongod.conf. Die Datei ist in YAML formatiert.
+Es beinhaltet die Einstellungen zu den Directories und die Konfigurationen zu Ports und IP Adressen.
+
+#### Best Practice
+
+Folgende Einstellungen für den Dienst werden als Best-Practise Konfiguriert:
+Datei: /etc/systemd/system/<process-name>.service
+
+```yaml
+[Service]
+# Other directives omitted
+# (file size)
+LimitFSIZE=infinity
+# (cpu time)
+LimitCPU=infinity
+# (virtual memory size)
+LimitAS=infinity
+# (locked-in-memory size)
+LimitMEMLOCK=infinity
+# (open files)
+LimitNOFILE=64000
+# (processes/threads)
+LimitNPROC=64000
+```
