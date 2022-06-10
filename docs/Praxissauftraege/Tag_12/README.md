@@ -10,6 +10,8 @@ Start:
 
 `npm run dev`
 
+Falls es zu Fehlern kommt, `npm install`
+
 Webbrowser
 
 `http://localhost:5000`
@@ -54,6 +56,7 @@ Passen Sie die Applikation und Datenbank wie folgt an:
 
 ### Erfassen Sie auf der MongoDB einen Systemadministrator
 
+```bash
 mongo --port 27017 --host 127.0.0.1
 
 > use admin
@@ -69,6 +72,7 @@ db.createUser(
     ]
 }
 )
+```
 
 Ausgabe:
 

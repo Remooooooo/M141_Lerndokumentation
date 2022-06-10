@@ -2,7 +2,7 @@
 
 ## URI
 
-Das Ziel ist es, eine Ressoruce zu Identifizieren.
+Das Ziel ist es, eine Ressoruce zu Identifizieren. URI steht für Uniform Resource Identifier.
 
 Eine Ressource kann, Websiten, Datein, Webservice, Email oder Dantenbanken sein.
 
@@ -11,9 +11,9 @@ Das configinc.php muss z.B. ins gitignore wenn man mit Github arbeitet. (Das Pas
 ### Aufbau
 
 Schema : Wie Protokoll
-Autorithy: Username Passwort TCP Port
+Autorithy: Username Passwort TCP (Port)
 Path: Route - Datenbank
-Weitere Key Value Pairs
+Weitere Key Value Pairs, getrennt mit ?
 
 Teils werden keine Parameter oder Logins benötogt.
 
@@ -21,7 +21,15 @@ Teils werden keine Parameter oder Logins benötogt.
 
 Falls der Port weggelassen wird, wird der standard Port verwendet. Bei SQL 3306.
 
-### MongoDB
+### Konkretes Beispiel
+
+Simple, mit Passwort  
+mongodb://root:password123@198.174.21.23:27017
+
+Replicaset  
+mongodb://db0.example.com:27017,db1.example.com:27017,db2.example.com:27017/?replicaSet=myRepl
+
+Wird in der Übung benötigt um von der MVC App auf die MongoDB mit Authentifizierung zuzugreifen.
 
 ## Variablen (Nicht Prüfungsrelevnat)
 
@@ -38,6 +46,8 @@ Per Default ist bei Mongo DB keine Authentifizierung eingeschaltet.
 Da dies ein hohes Sicherheitsrisko ist, sollte man im Konfigfile die Security enablen.
 
 File: /etc/mongod.conf
+
+(Alternativ beim Start mit --auth)
 
 ```bash
 security:
@@ -59,13 +69,15 @@ Wir werden Scram verwenden, es ist der Default.
 
 Welche Rechte haben die authentifizierten Users?
 
-Dies nennt sich Role Based Acces Control. Dies bedeutet dass eine spezielle Rolle Rechte auf eine Ressource haben kann und auf diesen Ressourcen kann man ebenfalls die Actions steuern.
+Dies nennt sich Role Based Acces Control. Dies bedeutet dass eine spezielle Rolle Rechte auf eine Ressource haben kann und auf diesen Ressourcen kann man ebenfalls die Actions steuern. Jenes kann über eigene oder über Built In Rollen geschehen.
+Actions sind Tätigkeiten wie insert, update oder delete.
 
 ### Begriffe
 
 Built-in Rollen:
 
 Sind vordefiniert mit vordefinierten Rechten
+(read, readWrite, dbAdmin ...)
 
 self-defined:
 
@@ -97,18 +109,34 @@ Folgende Methoden sind noch wichtig für die Rollenvergabe:
 | db.grantPrivilegesToRole() | Assigns privileges to a user-defined role.   |
 | db.updateRole()            | Updates a user-defined role.                 |
 
+### Beispiel
+
+```bash
+// Zur Admin Datenbank wechseln
+use admin
+db.createRole(
+   {
+     role: "TestRole",  // Name der Role
+     privileges: [
+       { resource: { db: "", collection: "" }, actions: [ "update" ] }
+     ],
+     roles: []
+   }
+)
+```
+
 ## Security Checklist
 
 Copy Past der wichtigsten Security advises.
 
-- Aktivieren Authentifizierung / Authorisierung (siehe vorhergehendes Kapitel)  
+- Aktivieren Authentifizierung / Authorisierung (siehe vorhergehendes Kapitel, jeder User soll nur bestimmtes können)  
 - Konfigurieren RBAC  
 - Definieren Sie einen System Administrator  
 - Definieren Sie einen eigenen Benutzer für jede Person/Applikation die MongoDB nutzen  
 - Weisen Sie nur so viele Rechte zu, wie wirklich nötig sind. Arbeiten Sie spezifischen Rollen  
 - Aktivieren Sie TLS/SSL für ihr System  
 - Verschlüsseln Sie die Daten und sammeln Sie die Log-Dateien von MongoDB  
-- Kontrollieren/Konfigurieren Sie die Netzwerk-Schnittstellen, über welche MongoDB verfügbar ist und hier  
+- Kontrollieren/Konfigurieren Sie die Netzwerk-Schnittstellen, über welche MongoDB verfügbar ist
 - Loggen/Überwachen Sie Veränderungen an der Konfiguration und den Daten der MongoDB-Instanz  
 - Deaktivieren Sie unsichere Funktionen  
 - Konfigurieren Sie einen speziellen MongoDB-Betriebssystem-Benutzer ("nicht als root laufen lassen")  
