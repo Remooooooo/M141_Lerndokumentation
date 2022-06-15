@@ -34,7 +34,12 @@ ON Schueler.SNr = belegt.SNr;
 
 ## Storage Engines bei MySQL
 
-Storage Engines beschreiben wie eine Datenbank die Daten speichern. Es ist möglich, seine eigene Engine zu entwickeln, jedoch haben die meisten Datenbanken ihre eingenen Storage engines.
+Storage Engines beschreiben wie eine Datenbank die Daten speichern. Es ist möglich, seine eigene Engine zu entwickeln, jedoch haben die meisten Datenbanken ihre eingenen Storage engines. Die Engine kann pro Table gesetzt werden.
+Die Storage Engine sind dazu da, die Anfragen zu bearbeiten.
+
+Wenn ein Create Table genutz wird, wird InnoDB als Default gesetzt.
+
+Es gibt eine Engine Namens Blackhole, welche alles was geschrieben wird ins dev/null verschiebt. 
 
 ### Auflistung Restliche Engines
 
@@ -65,7 +70,7 @@ Mit diesem Befehl kann die Standard Engine angepasst werden: `SET default_storag
 Wie man erkennen kann, ist InnoDB die Standard Engine auf MySQL. Dies ist jedoch erst seit version 5.5.1 der Fall. Davor war es MyISAM, da diese sehr effizient war und eine hohe Performance besass.
 InnoDB ist nun der Standard, da mit ihr ACID am besten realisiert werden kann. Die konsistenz der Daten ist sehr hoch, jedoch ist der Zugriff dadurch ein wenig langsamer.
 
-Grundsätzlich ist InnoDB eine gute Engine für Grosse Storage Systeme. MyISAM lohnt sich vorallem bei Web-Applikationen, da sie sehr perfomant ist.
+Grundsätzlich ist InnoDB eine gute Engine für Grosse Storage Systeme. MyISAM lohnt sich vorallem bei Web-Applikationen, da sie sehr perfomant ist. Ausserdem wird es eher für read genutzt, da das Write limitiert ist durch Table-Lockinmg (Bedeutet, eine Transaktion Sperrt einen ganzen Table)
 
 ### Anwendung auf Tabelle
 

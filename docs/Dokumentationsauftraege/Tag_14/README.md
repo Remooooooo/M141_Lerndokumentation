@@ -1,5 +1,29 @@
 # Tag 14
 
+## Docker Compose File
+
+services
+Beinhaltet alle Nodes, sowie den Master
+
+environment
+Geben diverse Infos über Login und den Cluster an
+
+depends_on
+Konfig für die Slaves, geben den Master an
+
+image
+Image, welches vom Docker hub heruntergeladen wird
+
+volumes
+Erstellt Container Volues für Persistente Daten
+
+network
+Definiert die Netzwerkkommunikation
+
+ports
+Definiert Ports
+
+
 ## Replication MySQL
 
 Motivationen für Cluster unter MySQL:

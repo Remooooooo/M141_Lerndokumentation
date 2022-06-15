@@ -17,6 +17,8 @@ Die gängigsten sind varchar, int, float, date, time
 JSON ist bekannterweise ein Array, welcher eine Liste von getrennten Werten beinhaltet.
 Der Vorteil von JSON ist, dass die Werte mit Indexes gespeichert werden, was performance bietet.
 
+JSON arbeitet häufig mit Key Value Pairs und kommt unter anderem in MongoDB vor, weil es sich arbeitet mit nested Documents zu arbeiten.
+
 Beispiel:
 
 ```mysql
@@ -48,6 +50,8 @@ Der Vorteil bei ENUM ist, dass ENUM mit Indexes arbeitet. So werden die vorgegeb
 
 Ein Index ist eine Struktur, welche das durchsuchen von Datensätzen beschleunigt.
 Durch einen Index wird eine zusätzliche Datenstruktur erstellt. Wenn grosse Datensätze häufig dursucht werden, macht es Sinn, mit Indexen zu arbeiten.
+Ohne Index muss die DB bei einem Where die ganze Tabelle durchsuchen, daher kann es bei grossen Datensätzen mehrere Sekunden dauern.
+Auf einem Index wird ebenfalls gespeichert, wo auf der Festplatte der gewünschte Wert gespeichert ist.
 
 Folgende Optionen zum Indexieren werden von MySQL angeboten:
 
@@ -55,4 +59,10 @@ Folgende Optionen zum Indexieren werden von MySQL angeboten:
 - Unique - eindeutiger Wert, beliebig viele Werte
 - Index - doppelte Werte pro Spalte
 - Fulltext - Jedes Wort eines längeren Fulltext wird Inexiert. Macht nur bedingt Sinn.
-  
+
+Erstellung:
+Ein Index kann z.B. über phpMyAdmin erstellt werden und in einer Tabelle per Dropdown ausgewählt werden.
+
+Der Nachteil ist, dass eine zusätzliche Datenstruktur (Der Index) gepflegt werden muss und es zusätzlich Speicherplatz benötigt.
+
+Es ist auch möglich, Indiezes über mehrere Spalten anzulegen, falls also mehrere Daten aus einer Spalte gesucht werden.

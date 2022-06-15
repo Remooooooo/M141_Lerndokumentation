@@ -21,7 +21,7 @@ MongoDB verfügt über einen eigenen speziellen Lizenzschlüssel, da Sie direkt 
 ### Vorteile
 
 - Umgang mit Grossen Datenmengen
-- Hoch Skalierbar mittels sharding 
+- Hoch Skalierbar mittels sharding
 - Strukturierte Daten ablegen mittels JSON (Objekte in Objekten abbiden)
 
 ### Begrifflichkeiten
